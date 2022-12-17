@@ -1,0 +1,15 @@
+venv
+venv/**
+urls.json
+
+# setuptools
+build
+build/**
+dist
+dist/**
+files.txt
+bookmark.egg-info
+bookmark.egg-info/**
+__pycache__
+__pycache__/**
+**/test.py
