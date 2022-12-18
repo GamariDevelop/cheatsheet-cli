@@ -1,3 +1,6 @@
+import pprint
+
+
 class Color(object):
     RED = '\033[31m'
     BLUE = '\033[34m'
@@ -15,3 +18,7 @@ def cprint(str, color=None):
         print(str)
 
 # def
+
+
+def log(str: str):
+    pprint.pprint(str)

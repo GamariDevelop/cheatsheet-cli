@@ -1,11 +1,10 @@
 import re
 import json
-import webbrowser
 import os
-
+import uuid
 import fire
 
-from utils import cprint
+from utils import cprint, log
 
 # ファイル保存の場所はapp.pyと同じディレクトリ
 file_path = os.path.dirname(__file__) + "\\urls.json"
@@ -16,44 +15,51 @@ class Command(object):
         """コマンド一覧を表示"""
         try:
             with open(file_path) as cheats_file:
-                cheats_dict = json.load(cheats_file)
-                print(cheats_dict)
-                for cheat_name in cheats_dict:
-                    cprint(cheat_name, color="blue")
-                    for cmd_dict in cheats_dict[cheat_name]["commands"]:
-                        command = cmd_dict["command"]
-                        description = cmd_dict["description"]
-                        print("  ", command, " | ", description)
+                cheats = json.load(cheats_file)
         except FileNotFoundError:
             return "addコマンドで、URLを追加してください。"
 
-    def add(self, app: str, command: str) -> str:
+        for cheat_name, cheat in cheats.items():
+            print(cheat_name)
+            for cmd in cheat["commands"]:
+                print(f"  {cmd['command']} | {cmd['description']}")
+
+    def add(self, app: str, cmd: str, description: str) -> str:
         """URLの追加を行う。"""
-        file_path = os.path.dirname(__file__) + "\\urls.json"
+        file_path = os.path.join(os.path.dirname(__file__), "urls.json")
 
         # ファイルが存在しない場合は新規作成
         if not os.path.exists(file_path):
-            with open(file_path, 'w') as f:
+            with open(file_path, "w") as f:
                 f.write("{}")
 
         # 読み込み
         with open(file_path, "r") as cheats_file:
-            cheats_dict = json.load(cheats_file)
+            cheats = json.load(cheats_file)
 
-            # サイト名が重複している場合はエラー
-            for cheats in cheats_dict:
-                if url_map["app"] == app:
-                    return "サイト名が重複しています。別の名前で登録してください。"
+        target_cheat = cheats.get(app)
+        print(target_cheat)
+        if (target_cheat is None):
+            # アプリを追加する
+            cheats[app] = {
+                "commands": []
+            }
+            commands = []
+        else:
+            commands = target_cheat["commands"]
 
-            # URL形式の判定
-            url_pattern = "https?://[\w/:%#\$&\?\(\)~\.=\+\-]+"
-            if not re.match(url_pattern, url):
-                return "URLの形式が間違っています。確認してください。"
+        commands.append({
+            "id": str(uuid.uuid4()),
+            "commands": cmd,
+            "description": description
+        })
+        cheats[app] = {
+            "commands": commands
+        }
 
-            # 追加処理
-            with open(file_path, "w") as write_file:
-                urls_dict.append({"app": app, "url": url})
-                json.dump(urls_dict, write_file, indent=4)
+        # 追加処理
+        with open(file_path, "w") as write_file:
+            json.dump(cheats, write_file, indent=4)
 
         return "追加完了"
 
@@ -72,7 +78,7 @@ class Command(object):
             return "削除するコマンドがありません。"
 
         # コマンドのバグがある
-        print(questions)
+        log(questions)
         answers = inquirer.prompt([
             inquirer.List(
                 "command",
@@ -80,7 +86,7 @@ class Command(object):
                 choices=questions
             ),
         ])
-        print(answers)
+        log(answers)
 
 
 def main():
