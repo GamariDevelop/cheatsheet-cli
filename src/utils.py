@@ -13,3 +13,5 @@ def cprint(str, color=None):
         print(f'{Color.BLUE}{str}{Color.RESET}')
     else:
         print(str)
+
+# def

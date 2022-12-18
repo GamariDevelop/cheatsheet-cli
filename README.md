@@ -17,6 +17,7 @@ python setup.py install
 ## 利用している技術
 
 - [python-fire](https://github.com/google/python-fire/blob/master/docs/guide.md)
+- [python-inquirer](https://github.com/magmax/python-inquirer)
 
 ## コマンド一覧
 

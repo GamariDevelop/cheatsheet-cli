@@ -27,10 +27,6 @@ class Command(object):
         except FileNotFoundError:
             return "addコマンドで、URLを追加してください。"
 
-    # def list(self, app):
-    #     """アプリケーション名を指定して、リストを表示する。"""
-    #     pass
-
     def add(self, app: str, command: str) -> str:
         """URLの追加を行う。"""
         file_path = os.path.dirname(__file__) + "\\urls.json"
@@ -61,9 +57,30 @@ class Command(object):
 
         return "追加完了"
 
-    # def delete(app: string):
-    #     # DELETEの選択をできるようにする。
-    #     pass
+    def delete(self, app: str):
+        """コマンド削除"""
+        import re
+        import inquirer
+        questions = []
+        try:
+            with open(file_path) as cheats_file:
+                cheats_dict = json.load(cheats_file)
+                target_cheat_commands = cheats_dict[app]["commands"]
+                for command in target_cheat_commands:
+                    questions.append(str(command))
+        except FileNotFoundError:
+            return "削除するコマンドがありません。"
+
+        # コマンドのバグがある
+        print(questions)
+        answers = inquirer.prompt([
+            inquirer.List(
+                "command",
+                message="削除するコマンドを選択してください。",
+                choices=questions
+            ),
+        ])
+        print(answers)
 
 
 def main():
