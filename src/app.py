@@ -4,7 +4,7 @@ import os
 import uuid
 import fire
 
-from utils import cprint, log
+from utils import cprint, log, CheatList
 
 # ファイル保存の場所はapp.pyと同じディレクトリ
 file_path = os.path.dirname(__file__) + "\\urls.json"
@@ -36,30 +36,13 @@ class Command(object):
         # 読み込み
         with open(file_path, "r") as cheats_file:
             cheats = json.load(cheats_file)
+            cheat_list = CheatList(cheats)
 
-        target_cheat = cheats.get(app)
-        print(target_cheat)
-        if (target_cheat is None):
-            # アプリを追加する
-            cheats[app] = {
-                "commands": []
-            }
-            commands = []
-        else:
-            commands = target_cheat["commands"]
-
-        commands.append({
-            "id": str(uuid.uuid4()),
-            "commands": cmd,
-            "description": description
-        })
-        cheats[app] = {
-            "commands": commands
-        }
+        cheat_list.add_command(app, cmd, description)
 
         # 追加処理
         with open(file_path, "w") as write_file:
-            json.dump(cheats, write_file, indent=4)
+            json.dump(cheat_list.get(), write_file, indent=4)
 
         return "追加完了"
 

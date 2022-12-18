@@ -1,3 +1,4 @@
+import uuid
 import pprint
 
 
@@ -17,8 +18,48 @@ def cprint(str, color=None):
     else:
         print(str)
 
-# def
-
 
 def log(str: str):
     pprint.pprint(str)
+
+
+"""
+{
+    "vscode": {
+        commands: "
+    }
+}
+"""
+
+
+class CheatList(object):
+    def __init__(self, data):
+        self.before = data
+        self.cheat_list = data
+
+    def print(self):
+        log(self.cheat_list)
+
+    def get(self):
+        return self.cheat_list
+
+    def has_cheat(self, app: str):
+        if self.cheat_list.get(app) is not None:
+            return True
+        else:
+            return False
+
+    def add_command(self, app: str, command: str, description: str):
+        """コマンドの追加処理。"""
+        if not self.has_cheat(app):
+            self.cheat_list[app] = {
+                "commands": []
+            }
+
+        update_commands = self.cheat_list[app].get("commands")
+        update_commands.append({
+            "id": str(uuid.uuid4()),
+            "command": command,
+            "description": description
+        })
+        log(update_commands)
