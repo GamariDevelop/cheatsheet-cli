@@ -16,14 +16,6 @@ insta.batが実行され、ます。
 
 4. インストール完了。
 
-**注意**
-
-インストールする際は、管理者権限が必要の場合があります。
-
-その際は管理者権限をつけてコマンドプロンプトを開いてください。
-
-1. コマンドプロンプト上で「bookmark url youtube」を打ち込み、Youtubeが開いたらインストール完了。
-
 ## 利用している技術
 
 - [python-fire](https://github.com/google/python-fire/blob/master/docs/guide.md)
@@ -41,13 +33,16 @@ cheatコマンドのみ打つと、コマンド一覧が表示されます。
 
 ## 機能
 
-- cheat add <name> <url>
+- cheat add <app_name> <command> <description>
+  - example
+    - cheat add vscode "ctrl c" "コピー"
 - cheat list
+- cheat delete <app_name>
 
 ## 開発用メモ
 
 - 実行
-  - python src/app.py add <APP> <COMMAND>
+  - python src/app.py add <APP> <COMMAND> <Description>
     - コマンド追加
   - python src/app.py list
     - リスト一覧
