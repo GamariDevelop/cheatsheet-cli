@@ -13,3 +13,4 @@ bookmark.egg-info/**
 __pycache__
 __pycache__/**
 **/test.py
+cheatsheet.egg-info

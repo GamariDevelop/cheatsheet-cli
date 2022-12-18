@@ -4,10 +4,11 @@ import os
 import uuid
 import fire
 
-from utils import cprint, log, CheatList
+from src.utils import cprint, log, CheatList
 
 # ファイル保存の場所はapp.pyと同じディレクトリ
-file_path = os.path.join(os.path.dirname(__file__), "output", "urls.json")
+dir_path = os.path.join(os.path.dirname(__file__), "output")
+file_path = os.path.join(dir_path, "urls.json")
 
 
 class Command(object):
@@ -27,6 +28,7 @@ class Command(object):
 
         # ファイルが存在しない場合は新規作成
         if not os.path.exists(file_path):
+            os.makedirs(dir_path, exist_ok=True)
             with open(file_path, "w") as f:
                 f.write("{}")
 
