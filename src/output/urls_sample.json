@@ -1,0 +1,39 @@
+{
+    "vscode": {
+        "commands": [
+            {
+                "id": "1",
+                "command": "ctrl c",
+                "description": "aaaaaa"
+            },
+            {
+                "id": "1a4d0d59-1cb4-4dda-82bc-9accb5c0a389",
+                "command": "a",
+                "description": "ddd"
+            },
+            {
+                "id": "2226efa6-9f98-4744-9618-e8861ff6a711",
+                "command": "a",
+                "description": "ddd"
+            }
+        ]
+    },
+    "pycharm": {
+        "commands": [
+            {
+                "id": "1",
+                "command": "ctrl c",
+                "description": "dd"
+            }
+        ]
+    },
+    "test": {
+        "commands": [
+            {
+                "id": "3cf6d025-f71c-4804-8e72-1f30df465cc4",
+                "command": "a",
+                "description": "b"
+            }
+        ]
+    }
+}

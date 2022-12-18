@@ -18,7 +18,7 @@ class Command(object):
                 cheats = json.load(cheats_file)
                 cheat_list = CheatList(cheats)
         except FileNotFoundError:
-            return "addコマンドで、URLを追加してください。"
+            return "addコマンドで、コマンドを追加してください。"
 
         cheat_list.print_list()
 
@@ -51,22 +51,33 @@ class Command(object):
         try:
             with open(file_path) as cheats_file:
                 cheats_dict = json.load(cheats_file)
-                target_cheat_commands = cheats_dict[app]["commands"]
-                for command in target_cheat_commands:
-                    questions.append(str(command))
+                cheat_list = CheatList(cheats_dict)
         except FileNotFoundError:
             return "削除するコマンドがありません。"
 
-        # コマンドのバグがある
-        log(questions)
-        answers = inquirer.prompt([
+        if not cheat_list.has_commands(app):
+            return "削除するコマンドがありません。"
+        questions = cheat_list.create_questions(app)
+
+        answer = inquirer.prompt([
             inquirer.List(
                 "command",
                 message="削除するコマンドを選択してください。",
                 choices=questions
             ),
         ])
-        log(answers)
+
+        target_id = None
+        for c in cheat_list.get_commands(app):
+            print(c, answer)
+            if str(c) == answer["command"]:
+                target_id = c["id"]
+
+        # delete処理
+        cheat_list.delete(app, target_id)
+
+        with open(file_path, "w") as write_file:
+            json.dump(cheat_list.get(), write_file, indent=4)
 
 
 def main():

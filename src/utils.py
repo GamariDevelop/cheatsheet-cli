@@ -31,12 +31,33 @@ class CheatList(object):
     def get(self):
         return self.cheat_list
 
+    def get_commands(self, app: str):
+        return self.cheat_list[app].get("commands")
+
+    def create_questions(self, app: str):
+        if not self.has_cheat(app):
+            return []
+        else:
+            commands = self.get_commands(app)
+            questions = []
+            for cmd in commands:
+                questions.append(str(cmd))
+            return questions
+
+    ### 判定系 ###
     def has_cheat(self, app: str):
         if self.cheat_list.get(app) is not None:
             return True
         else:
             return False
 
+    def has_commands(self, app: str):
+        if len(self.cheat_list.get(app)["commands"]) == 0:
+            return False
+        else:
+            return True
+
+    ### 更新系 ###
     def add_command(self, app: str, command: str, description: str):
         """コマンドの追加処理。"""
         if not self.has_cheat(app):
@@ -51,6 +72,11 @@ class CheatList(object):
             "description": description
         })
         log(update_commands)
+
+    def delete(self, app: str, target_id: str):
+        update_commands = [
+            item for item in self.cheat_list[app].get("commands") if item["id"] != target_id]
+        self.cheat_list[app]["commands"] = update_commands
 
     ### 表示系 ###
     def print(self):
