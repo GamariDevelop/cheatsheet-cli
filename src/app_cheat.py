@@ -14,6 +14,7 @@ file_path = os.path.join(dir_path, "urls.json")
 class Command(object):
     def list(self):
         """コマンド一覧を表示"""
+        print("PAHT", file_path)
         try:
             with open(file_path) as cheats_file:
                 cheats = json.load(cheats_file)

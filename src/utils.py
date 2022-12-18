@@ -84,6 +84,7 @@ class CheatList(object):
 
     def print_list(self):
         for cheat_name, cheat in self.cheat_list.items():
-            cprint(cheat_name, "BLUE")
+            # cprint(cheat_name, "BLUE")    # TODO 色を付けるように変更する
+            print(cheat_name, "BLUE")
             for cmd in cheat["commands"]:
                 print(f"  {cmd['command']} | {cmd['description']}")
