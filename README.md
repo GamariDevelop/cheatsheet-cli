@@ -14,19 +14,32 @@ python setup.py install
 
 4. コマンドプロンプト上で「bookmark url youtube」を打ち込み、Youtubeが開いたらインストール完了。
 
+## 利用している技術
+
+- [python-fire](https://github.com/google/python-fire/blob/master/docs/guide.md)
+
+## コマンド一覧
+
+```shell
+cheat
+```
+
+cheatコマンドのみ打つと、コマンド一覧が表示されます。
+
+一覧から抜けるには「q」を押してください。
 
 ## 機能
 
-- bookmark list
-  - 登録したBookmarkのurl一覧を表示。
-- bookmark add <name> <url>
-  - nameにurlを紐づけ、urlコマンドで呼び出せるようになる。
-- bookmark url <name>
-  - nameに紐付けられたurlのサイトを呼び出す。
-
-## 使用例
+- cheat add <name> <url>
+- cheat list
 
 ## 開発用メモ
+
+- 実行
+  - python src/app.py add <APP> <COMMAND>
+    - コマンド追加
+  - python src/app.py list
+    - リスト一覧
 
 - テスト
   - python src/test_app.py
