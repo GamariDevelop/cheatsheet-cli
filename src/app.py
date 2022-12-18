@@ -7,7 +7,7 @@ import fire
 from utils import cprint, log, CheatList
 
 # ファイル保存の場所はapp.pyと同じディレクトリ
-file_path = os.path.dirname(__file__) + "\\urls.json"
+file_path = os.path.join(os.path.dirname(__file__), "output", "urls.json")
 
 
 class Command(object):
@@ -16,17 +16,14 @@ class Command(object):
         try:
             with open(file_path) as cheats_file:
                 cheats = json.load(cheats_file)
+                cheat_list = CheatList(cheats)
         except FileNotFoundError:
             return "addコマンドで、URLを追加してください。"
 
-        for cheat_name, cheat in cheats.items():
-            print(cheat_name)
-            for cmd in cheat["commands"]:
-                print(f"  {cmd['command']} | {cmd['description']}")
+        cheat_list.print_list()
 
     def add(self, app: str, cmd: str, description: str) -> str:
         """URLの追加を行う。"""
-        file_path = os.path.join(os.path.dirname(__file__), "urls.json")
 
         # ファイルが存在しない場合は新規作成
         if not os.path.exists(file_path):

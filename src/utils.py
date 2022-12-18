@@ -23,22 +23,10 @@ def log(str: str):
     pprint.pprint(str)
 
 
-"""
-{
-    "vscode": {
-        commands: "
-    }
-}
-"""
-
-
 class CheatList(object):
     def __init__(self, data):
         self.before = data
         self.cheat_list = data
-
-    def print(self):
-        log(self.cheat_list)
 
     def get(self):
         return self.cheat_list
@@ -63,3 +51,13 @@ class CheatList(object):
             "description": description
         })
         log(update_commands)
+
+    ### 表示系 ###
+    def print(self):
+        log(self.cheat_list)
+
+    def print_list(self):
+        for cheat_name, cheat in self.cheat_list.items():
+            cprint(cheat_name, "BLUE")
+            for cmd in cheat["commands"]:
+                print(f"  {cmd['command']} | {cmd['description']}")
